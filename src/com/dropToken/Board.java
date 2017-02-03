@@ -4,11 +4,18 @@ import java.util.*;
 
 class Board {
 
-    int rows;
-    int columns;
+    private int[][] contents;
 
-    public Board(int rows, int colums){
-        this.rows = rows;
-        this.columns = colums;
+    public Board(){
+        contents = new int[4][4];
     }
+
+    public void printBoard(){
+    }
+
+
+    private int convertIndex(int row, int column){
+        return
+    }
+
 }
