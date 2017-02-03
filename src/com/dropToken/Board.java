@@ -2,7 +2,7 @@ package com.dropToken;
 
 import java.util.*;
 
-public class Board {
+class Board {
 
     int rows;
     int columns;
