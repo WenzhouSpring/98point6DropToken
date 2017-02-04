@@ -1,6 +1,7 @@
 package com.dropToken;
-import com.dropToken.Board;
 
+import java.util.Vector;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -14,47 +15,64 @@ public class Main {
         System.out.println("Welcome to Drop Token Game!");
         Scanner scanner = new Scanner(System.in);
         Board board = new Board(size, size);
-        while(true){
+        List<Integer> listOfPut = new Vector<>();
+        int player = 1;
+
+        while (true) {
 
             String[] split = scanner.nextLine().split("\\s+");
-            if(split.length != 1 && split.length != 2){
+            if (split.length != 1 && split.length != 2) {
                 System.out.println("Input is not valid! Please enter a valid command!");
                 continue;
             }
 
-            switch (split[0]){
+            switch (split[0]) {
                 case "GET":
-                    break;
+                    if (board.isBoardEmpty()) {
+                        continue;
+                    }
+                    listOfPut.forEach(System.out::println);
+                    continue;
                 case "BOARD":
-                    break;
+                    board.printBoard();
+                    continue;
                 case "PUT":
-                            try{
-                                int column = Integer.valueOf(split[1]);
-                                if(column < 1 || column > size){
-                                    throw new Exception();
-                                }
-                            }catch (Exception e){
-                                System.out.println("Input is not valid! Please enter a valid command!");
-                                continue;
-                            }
-                    break;
+                    int column;
+                    try {
+                        column = Integer.valueOf(split[1]);
+                        if (column < 1 || column > size) {
+                            throw new Exception();
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Input is not valid! Please enter a valid command!");
+                        continue;
+                    }
+
+                    if (board.isColumnFull(column)) {
+                        System.out.println("ERROR");
+                        continue;
+                    }
+
+                    listOfPut.add(column);
+                    if (board.insertAndCheck(column, player)) {
+                        System.out.println("WIN");
+                    } else if (board.isBoardFull()) {
+                        System.out.println("DRAW");
+                    } else {
+                        System.out.println("OK");
+                    }
+
+                    player = -player;
+
+                    continue;
                 case "EXIT":
-                    break;
+                    System.exit(0);
                 default:
                     System.out.println("Input is not valid! Please enter a valid command!");
-                    continue;
             }
-
-
-
-
-
         }
 
     }
-
-
-
 
 
 }

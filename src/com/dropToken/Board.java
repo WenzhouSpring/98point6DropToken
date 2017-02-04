@@ -1,26 +1,46 @@
 package com.dropToken;
 
-import java.util.*;
-
 class Board {
 
     private int rows;
     private int columns;
     private int[][] payloads;
+    private int spaceOfTable;
+    private int[] cursors;
 
-    public Board(int rows, int columns) {
+    Board(int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
         this.payloads = new int[rows][columns];
+        this.spaceOfTable = rows * columns;
+        this.cursors = new int[rows];
+        for (int i = 0; i < cursors.length; i++) {
+            cursors[i] = rows;
+        }
     }
 
-
-    public boolean insertAndCheck(int row, int column, int value) {
-        payloads[row][column] = value;
-        return checkWinning(row, column);
+    boolean isBoardFull() {
+        return spaceOfTable == 0;
     }
 
-    public void printBoard() {
+    boolean isBoardEmpty() {
+        return spaceOfTable == (rows * columns);
+    }
+
+    boolean isColumnFull(int column) {
+        return cursors[column - 1] == 0;
+    }
+
+    boolean insertAndCheck(int column, int value) {
+        int rowOfPayloads = cursors[column - 1] - 1;
+        int columnOfPayloads = column - 1;
+        payloads[rowOfPayloads][columnOfPayloads] = value;
+        spaceOfTable--;
+        cursors[column - 1]--;
+        return checkWinning(rowOfPayloads, columnOfPayloads);
+    }
+
+    void printBoard() {
         // print out the contents of the array
         for (int i = 0; i < rows; i++) {
             System.out.print("|");
@@ -98,11 +118,7 @@ class Board {
             score += payloads[row][i];
         }
 
-        if (score == rows || score == -rows) {
-            return true;
-        }
-
-        return false;
+        return(score == rows || score == -rows);
 
     }
 }
