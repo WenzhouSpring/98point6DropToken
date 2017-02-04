@@ -17,6 +17,7 @@ public class Main {
         Board board = new Board(size, size);
         List<Integer> listOfPut = new Vector<>();
         int player = 1;
+        boolean hasWinnerYet = false;
 
         while (true) {
 
@@ -37,6 +38,11 @@ public class Main {
                     board.printBoard();
                     continue;
                 case "PUT":
+
+                    if (hasWinnerYet) {
+                        System.out.println("ERROR");
+                    }
+
                     int column;
                     try {
                         column = Integer.valueOf(split[1]);
@@ -56,6 +62,7 @@ public class Main {
                     listOfPut.add(column);
                     if (board.insertAndCheck(column, player)) {
                         System.out.println("WIN");
+                        hasWinnerYet = true;
                     } else if (board.isBoardFull()) {
                         System.out.println("DRAW");
                     } else {

@@ -118,7 +118,7 @@ class Board {
             score += payloads[row][i];
         }
 
-        return(score == rows || score == -rows);
+        return (score == rows || score == -rows);
 
     }
 }
