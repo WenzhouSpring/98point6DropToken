@@ -1,5 +1,8 @@
 package com.dropToken;
 
+/**
+ * Board represents
+ */
 class Board {
 
     private int rows;
@@ -8,6 +11,11 @@ class Board {
     private int spaceOfTable;
     private int[] cursors;
 
+    /**
+     *
+     * @param rows
+     * @param columns
+     */
     Board(int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
@@ -19,18 +27,37 @@ class Board {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     boolean isBoardFull() {
         return spaceOfTable == 0;
     }
 
+    /**
+     *
+     * @return
+     */
     boolean isBoardEmpty() {
         return spaceOfTable == (rows * columns);
     }
 
+    /**
+     *
+     * @param column
+     * @return
+     */
     boolean isColumnFull(int column) {
         return cursors[column - 1] == 0;
     }
 
+    /**
+     *
+     * @param column
+     * @param value
+     * @return
+     */
     boolean insertAndCheck(int column, int value) {
         int rowOfPayloads = cursors[column - 1] - 1;
         int columnOfPayloads = column - 1;
@@ -40,6 +67,9 @@ class Board {
         return checkWinning(rowOfPayloads, columnOfPayloads);
     }
 
+    /**
+     *
+     */
     void printBoard() {
         // print out the contents of the array
         for (int i = 0; i < rows; i++) {
@@ -69,6 +99,12 @@ class Board {
         System.out.println();
     }
 
+    /**
+     *
+     * @param row
+     * @param column
+     * @return
+     */
     private boolean checkWinning(int row, int column) {
 
         int score = 0;
