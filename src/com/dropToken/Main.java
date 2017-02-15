@@ -4,6 +4,14 @@ import java.util.Vector;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Main represents the view and controller pars of the Drop Token game.
+ *
+ * It communicates with clients, which asks them for input and return the result to client.
+ * After the valid input is received, it transfers the input into Model(Board class),
+ * and Board has the result sent back to Main.
+ */
+
 
 public class Main {
 
@@ -15,13 +23,17 @@ public class Main {
         System.out.println("Welcome to Drop Token Game!");
         Scanner scanner = new Scanner(System.in);
         Board board = new Board(size, size);
+
+        // Store the put of clients
         List<Integer> listOfPut = new Vector<>();
+        // Player indicate which player is playing
         int player = 1;
         boolean hasWinnerYet = false;
 
         while (true) {
 
             String[] split = scanner.nextLine().split("\\s+");
+            // Edge cases
             if (split.length != 1 && split.length != 2) {
                 System.out.println("Input is not valid! Please enter a valid command!");
                 continue;
@@ -60,7 +72,7 @@ public class Main {
                     }
 
                     listOfPut.add(column);
-                    if (board.insertAndCheck(column, player)) {
+                    if (board.dropAndCheck(column, player)) {
                         System.out.println("WIN");
                         hasWinnerYet = true;
                     } else if (board.isBoardFull()) {

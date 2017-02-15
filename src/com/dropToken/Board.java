@@ -1,20 +1,32 @@
 package com.dropToken;
 
 /**
- * Board represents
+ * Board represents a grid with m rows and n columns,
+ * which m and n depended on initial constructor input.
+ * A Board is mainly a two dimensional int array,
+ * which rows is the length of outer array, and column is the length of inner array.
+ *
+ * In addition, Board acts as model part in entire MVC design pattern
  */
 class Board {
 
+    // the number of rows of grid
     private int rows;
+    // the number of columns of grid
     private int columns;
+    // contents of grid
     private int[][] payloads;
+    // volume or size of grid
     private int spaceOfTable;
+    // the remaining space of each column can be filled with token
     private int[] cursors;
 
     /**
      *
-     * @param rows
-     * @param columns
+     * Construct a new board
+     *
+     * @param rows the number of rows of board
+     * @param columns the number of columns of board
      */
     Board(int rows, int columns) {
         this.rows = rows;
@@ -29,7 +41,10 @@ class Board {
 
     /**
      *
-     * @return
+     * Check whether the board is full
+     *
+     * @return a boolean, b, such that b = true; if the board is full,
+     * otherwise, the board is not full.
      */
     boolean isBoardFull() {
         return spaceOfTable == 0;
@@ -37,7 +52,10 @@ class Board {
 
     /**
      *
-     * @return
+     * Check whether the board is empty
+     *
+     * @return a boolean, b, such that b = true; if the board is empty,
+     * otherwise, the board is not empty.
      */
     boolean isBoardEmpty() {
         return spaceOfTable == (rows * columns);
@@ -45,8 +63,11 @@ class Board {
 
     /**
      *
-     * @param column
-     * @return
+     * Check whether the column is full.
+     *
+     * @param column the column to be checked
+     * @return a boolean, b, such that b = true; if the column is full,
+     * otherwise, the column is not full.
      */
     boolean isColumnFull(int column) {
         return cursors[column - 1] == 0;
@@ -54,11 +75,14 @@ class Board {
 
     /**
      *
-     * @param column
-     * @param value
-     * @return
+     * drop a token into the board, and check the status of game.
+     *
+     * @param column the column that the token dropped along with
+     * @param value the value of the token specified by player
+     * @return a boolean, b, such that b = true; if the player wins,
+     * otherwise, the player does not win.
      */
-    boolean insertAndCheck(int column, int value) {
+    boolean dropAndCheck(int column, int value) {
         int rowOfPayloads = cursors[column - 1] - 1;
         int columnOfPayloads = column - 1;
         payloads[rowOfPayloads][columnOfPayloads] = value;
@@ -68,7 +92,7 @@ class Board {
     }
 
     /**
-     *
+     * Print the board
      */
     void printBoard() {
         // print out the contents of the array
@@ -101,9 +125,12 @@ class Board {
 
     /**
      *
-     * @param row
-     * @param column
-     * @return
+     * Check the status of the board to see if there is a winner
+     *
+     * @param row the row that related to the dropped token
+     * @param column the column that related to the dropped token
+     * @return a boolean, b, such that b = true; if a player wins,
+     * otherwise, there is no winning occurred.
      */
     private boolean checkWinning(int row, int column) {
 
